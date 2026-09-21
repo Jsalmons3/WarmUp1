@@ -28,8 +28,30 @@ class MyApp(ShowBase):
             self.parent.instanceTo(self.placeholder2)
             x = x + 0.06
 
+        # Mouse control
+        self.disableMouse()
+
+        self.camera.setPos(0.0, 0.0, 250.0)
+        self.camera.setHpr(0.0, -90.0, 0.0)
+
+        self.accept('arrow_left', self.negativeX, [1])
+        self.accept('arrow_left-up', self.negativeX, [0])
+
         self.accept('escape', self.quit)
     def quit(self):
         sys.exit()
+
+    def negativeX(self, keyDown):
+        if (keyDown):
+            self.taskMgr.add(self.moveNegativeX, 'moveNegativeX')
+    
+        else:
+            self.taskMgr.remove('moveNegativeX')
+    
+    def moveNegativeX(self, task):
+        self.fighter.setX(self.fighter, -1)
+        return task.cont # Sets the task to continue next game cycle
+
+    
 app = MyApp()
 app.run()
