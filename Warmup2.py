@@ -40,6 +40,8 @@ class MyApp(ShowBase):
         self.accept('arrow_right-up', self.positiveX, [0])
         self.accept('arrow_up', self.positiveY, [1])
         self.accept('arrow_up-up', self.positiveY, [0])
+        self.accept('arrow_down', self.negativeY, [1])
+        self.accept('arrow_down-up', self.negativeY, [0])
 
         self.accept('escape', self.quit)
     def quit(self):
@@ -76,6 +78,17 @@ class MyApp(ShowBase):
     
     def movePositiveY(self, task):
         self.fighter.setY(self.fighter, 1)
+        return task.cont
+
+    def negativeY(self, keyDown):
+        if (keyDown):
+            self.taskMgr.add(self.moveNegativeY, 'moveNegativeY')
+                    
+        else:
+            self.taskMgr.remove('moveNegativeY')
+            
+    def moveNegativeY(self, task):
+        self.fighter.setY(self.fighter, -1)
         return task.cont
 
 app = MyApp()
